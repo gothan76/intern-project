@@ -9,6 +9,48 @@
         #previewImage {
             transition: transform 0.5s ease;
         }
+        #container{
+            position: relative;
+        }
+        #image-container{
+            width: 100px;
+            height: 150px;
+            position: absolute;
+        }
+        #imageDisplay{
+            width: 100px;
+            height: 150px;
+            top: 20px;
+            left: -550px;
+        }
+        #sd{
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            top: 90px;
+            left: 200px;
+        }
+        #sc{
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            top: 90px;
+            left: 400px;
+        }
+        #sb{
+            position: absolute;
+            width: 200px;
+            height: 20px;
+            top: 145px;
+            left: 250px;
+        }
+        #sl{
+            position: absolute;
+            width: 200px;
+            height: 20px;
+            top: 200px;
+            left: 250px;
+        }
     </style>
 </head>
 <body>
@@ -18,12 +60,10 @@
         <div id="img-container">
             <img id="imageDisplay" src="" alt="Uploaded Image">
         </div>
-        <div class="user_values">
-            <div id="sd"></div>
-            <div id="sc"></div>
-            <div id="sb"></div>
-            <div id="sl"></div>
-        </div>
+        <div id="sd"></div>
+        <div id="sc"></div>
+        <div id="sb"></div>
+        <div id="sl"></div>
     </div>
     <div class="upload">
         <input type="file" id="previewImage" accept="image/*" class="custom-file-input">
