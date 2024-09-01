@@ -26,7 +26,7 @@ function convert(){
 
 // background image removing
 const photo1 = document.getElementById('imageDisplay');
-const apiKey = 'ZkkRjh8Cu4RDirLV4jaHbTxw';
+const apiKey = 'bed6jXmshZ5mbihEAoD9oVFy';
 document.getElementById('bg').addEventListener('click', async () => {
   const file = await fetch(photo1.src)
     .then(res => res.blob());
@@ -146,7 +146,7 @@ document.getElementById('download').addEventListener('click', function() {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              'X-Api-Key': 'ZkkRjh8Cu4RDirLV4jaHbTxw'  // Replace with your actual API key
+              'X-Api-Key': 'bed6jXmshZ5mbihEAoD9oVFy'  // Replace with your actual API key
           },
           body: JSON.stringify(payload)
       })
