@@ -12,6 +12,8 @@ imageInput.addEventListener('change', (event) => {
 
 // value from input boxes
 function convert(){
+  var name = document.getElementById("name").value;
+  document.getElementById("nm").innerHTML=name;
   var std = document.getElementById("std").value;
   document.getElementById("sd").innerHTML = std; // standard
   var sec = document.getElementById("sec").value;
@@ -24,7 +26,7 @@ function convert(){
 
 // background image removing
 const photo1 = document.getElementById('imageDisplay');
-const apiKey = '8ky3t6xk6zKaKkZpjxgUkRUp';
+const apiKey = 'ZkkRjh8Cu4RDirLV4jaHbTxw';
 document.getElementById('bg').addEventListener('click', async () => {
   const file = await fetch(photo1.src)
     .then(res => res.blob());
@@ -121,27 +123,51 @@ document.getElementById('flipVertical').addEventListener('click', () => {
 });
 
 // Apply all transformations
-// Apply all transformations
 function applyTransform() {
   img.style.transform = `rotate(${rotation}deg) scale(${scale}) scaleX(${flipH}) scaleY(${flipV}) translateX(${translateX}px) translateY(${translateY}px)`;
 }
 
+// download the label
 
-document.getElementById('download').addEventListener('click', async () => {
-  // Ensure html2canvas is correctly imported
-  if (typeof html2canvas === 'undefined') {
-    console.error('html2canvas is not loaded');
-    return;
-  }
+// Capture the HTML element using html2canvas and send the image to remove.bg API
+document.getElementById('download').addEventListener('click', function() {
+  html2canvas(document.querySelector("#container")).then(canvas => {
+      // Convert the canvas to a base64 image (without the prefix)
+      var base64Image = canvas.toDataURL("image/png").split(',')[1];
 
-  await html2canvas(document.getElementById("container"), {
-    scale: 1.5
-  }).then(async canvas => {
-    let link = document.createElement('a');
-    link.download = 'div-image.png';
-    link.href = canvas.toDataURL();
-    link.click();
-  }).catch(err => {
-    console.error('Error generating canvas:', err);
+      // Prepare the payload with the base64 image
+      var payload = {
+          image_file_b64: base64Image,
+          size: 'auto'  // This can be adjusted based on your needs or API documentation
+      };
+
+      // Send the image to the background remover API
+      fetch('https://api.remove.bg/v1.0/removebg', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-Api-Key': 'ZkkRjh8Cu4RDirLV4jaHbTxw'  // Replace with your actual API key
+          },
+          body: JSON.stringify(payload)
+      })
+      .then(response => {
+          if (!response.ok) {
+              return response.text().then(text => {
+                  throw new Error('API call failed with status ' + response.status + ': ' + text);
+              });
+          }
+          return response.blob();  // The response may return a blob
+      })
+      .then(blob => {
+          let link = document.createElement('a');
+          link.download = 'div-image.png';
+          link.href = URL.createObjectURL(blob);
+          link.click();
+      })
+      .catch(error => {
+          console.error("Error during background removal:", error);
+      });
+
+      console.log('done');
   });
 });
